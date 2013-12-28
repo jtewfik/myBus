@@ -1,0 +1,20 @@
+{
+  "uuid": "1f489a04-c324-4b45-a0b0-84b7bf535b3a",
+  "shortName": "My Bus",
+  "longName": "My Bus",
+  "companyName": "MakeAwesomeHappen",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "stop_num": 0,
+    "route_num":1,
+    "minutes":2
+  },
+  "resources": {
+    "media": []
+  },
+  "capabilities": ["location","configurable"]
+}
