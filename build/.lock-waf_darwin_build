@@ -1,0 +1,8 @@
+argv = ['/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/Pebble/waf', 'configure', 'build']
+environ = {'USERNAME': 'root', 'SSH_AUTH_SOCK': '/tmp/launch-ZRQ4GR/Listeners', 'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'SUDO_UID': '501', 'SUDO_GID': '20', 'LOGNAME': 'root', 'USER': 'root', 'HOME': '/Users/jtewfik', 'PATH': '/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/arm-cs-tools/bin:/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin', '_': '/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/Pebble/waf', 'LANG': 'en_CA.UTF-8', 'SUDO_COMMAND': '/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/bin/pebble build', 'TERM': 'xterm', 'SHELL': '/bin/bash', 'COLORFGBG': '7;0', 'VERSIONER_PYTHON_VERSION': '2.7', 'SHLVL': '1', '__CF_USER_TEXT_ENCODING': '0x0:0:0', 'PWD': '/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/myBus', 'MAIL': '/var/mail/root', 'SUDO_USER': 'jtewfik'}
+files = ['/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/myBus/wscript']
+hash = 4672844372416070989
+options = {'files': '', 'jobs': 2, 'verbose': 0, 'nocache': False, 'progress_bar': 0, 'timestamp': None, 'distcheck_args': None, 'top': '', 'destdir': '', 'keep': 0, 'zones': '', 'debug': False, 'prefix': '/usr/local/', 'download': False, 'force': False, 'targets': '', 'out': ''}
+out_dir = '/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/myBus/build'
+run_dir = '/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/myBus'
+top_dir = '/Users/jtewfik/pebble-dev/PebbleSDK-2.0-BETA4/myBus'
