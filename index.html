@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>myBus Configuration</title>
+    <title>My Bus Configuration</title>
   </head>
 
   <body>
@@ -22,26 +22,44 @@
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Stop Number:</h3>
-
-        <input type="text" name="stop_num"/>
-
-        <h3><a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Route Number:</h3>
-
-        <input type="text" name="stop_num"/>
-      </section>
+      <form id="config-form" class="inner" action="#" method="POST">
+         <div class="form-group">
+          <label for="stopNum">Stop Number:</label>
+          <input type="text" id="stopNum" name="stopNum" class="form-control" placeholder="51082" size="50"/>
+        </div>
+        <div class="form-group" style="padding-top:20px">
+          <label for="routeNum">Route Number:</label>
+          <input type="text" id="routeNum" name="routeNum" class="form-control" placeholder="003" size="50"/>
+        </div>
+      </form>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">My Bus maintained by <a href="https://github.com/jtewfik">jtewfik</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
-    
+    <script type="text/javascript">
+      $().ready(function () {
+        $("#config-form").submit(function(e) {
+          console.log("TESTING SUBMIT");
+          var stop = $("#stopNum").val();
+          var route = $("#routeNum").val();
+
+          var configObj = { stop_num: stop,
+                            route_num: route
+                          };
+
+          localStorage.setItem("stop_num", stop);
+          localStorage.setItem("route_num", route);
+
+          window.location.href = "pebblejs://close#" + JSON.stringify(configObj);
+          e.preventDefault();
+
+        });
+      }); 
 
   </body>
 </html>
