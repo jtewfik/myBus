@@ -50,6 +50,10 @@
 
     <script type="text/javascript">
       $().ready(function () {
+
+        $("#stopNum").val(localStorage.getItem("stop_num"));
+        $("#routeNum").val(localStorage.getItem("route_num"));
+
         $("#config-form").submit(function(e) {
           console.log("TESTING SUBMIT");
           var stop = $("#stopNum").val();
