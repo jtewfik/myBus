@@ -55,14 +55,14 @@
           var stop = $("#stopNum").val();
           var route = $("#routeNum").val();
 
-          var configObj = { stop_num: stop,
-                            route_num: route
+          var configObj = { "stop_num": stop,
+                            "route_num": route
                           };
 
           localStorage.setItem("stop_num", stop);
           localStorage.setItem("route_num", route);
 
-          document.location = "pebblejs://close#success";//#" + JSON.stringify(configObj);
+          document.location = "pebblejs://close#" + JSON.stringify(configObj);
           e.preventDefault();
 
         });
