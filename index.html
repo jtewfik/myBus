@@ -62,7 +62,7 @@
           localStorage.setItem("stop_num", stop);
           localStorage.setItem("route_num", route);
 
-          window.location.href = "pebblejs://close#" + JSON.stringify(configObj);
+          document.location = "pebblejs://close#" + JSON.stringify(configObj);
           e.preventDefault();
 
         });
