@@ -10,7 +10,7 @@
   },
   "appKeys": {
     "stop_num": 0,
-    "route_num":1,
+    "route_nums":1,
     "minutes":2
   },
   "resources": {

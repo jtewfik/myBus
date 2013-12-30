@@ -7,8 +7,8 @@ static TextLayer *route_num_layer;
 static TextLayer *minutes_layer;
 //string values:
 static char stop_num[12];
-static char route_num[10];
-static char minutes[17];
+static char route_nums[10][10];
+static char minutes[10][17];
 
 enum {
   STOP_NUM = 0x0,
