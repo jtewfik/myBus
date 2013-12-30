@@ -64,6 +64,9 @@ Pebble.addEventListener("showConfiguration",
 Pebble.addEventListener("webviewclosed",
 						function(e) {
 							console.log("Closing configuration");
+							var test = localStorage.getItem("stop_num");
+							console.log(test);
+
 							//store the settings
 							if (e.response) {
 								var config = JSON.parse(e.response);
@@ -76,6 +79,8 @@ Pebble.addEventListener("webviewclosed",
 								localStorage.setItem("route_num", config.route_num);
 
 								fetchStopTime(config.stop_num, config.route_num);
+							} else {
+								console.log("no response");
 							}
 
 						});
