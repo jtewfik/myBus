@@ -1,16 +1,23 @@
 var stop_num = localStorage.getItem("stop_num");
-var route_nums = localStorage.getItem("route_nums");
+//Array of route numbers
+var route_list = localStorage.getItem("route_list");
+//Array of minutes until next bus for given route
+var minutes_list = localStorage.getItem("minutes_list");
+var route_str_list = localStorage.getItem("route_str_list");
+var last_route_index = localStorage.getItem("last_route");
 
-function fetchStopTime(stop_number, route_numbers) {
-	//update local vars
+function fetchStopTimes(stop_number, route_numbers) {
+	//update local vars and store them
 	stop_num = stop_number;
-	route_nums = route_numbers;
+	route_list = route_numbers;
+	localStorage.setItem("route_list", route_list);
+	localStorage.setItem("stop_num", stop_num);
 
-	console.log("fetching stop time for  stop# " + stop_num + " and routes " + route_nums.toString();
+	console.log("fetching stop time for  stop# " + stop_num + " and routes " + route_list.toString());
 
 	var minutesList = new Array();
 	var routesList = new Array();
-	for (var i=0;i<route_nums.length; i++){
+	for (var i=0;i<route_list.length; i++){
 		//Create and dispatch a request for each route
 		var req = new XMLHttpRequest();
 		req.open('GET', "http://api.translink.ca/RTTIAPI/V1/stops/" + stop_num + "/estimates?timeframe=120&apiKey=xrt9jWz1VzXJ7unF1tlv&routeNo=" + route_num + "&count=1", false);
@@ -25,62 +32,63 @@ function fetchStopTime(stop_number, route_numbers) {
 			if (response.Schedules && response.Schedules[0].ExpectedCountdown && i < 10) {
 				var minutes = response.Schedules[0].ExpectedCountdown;
 				minutesList[i] = minutes.toString() + " minutes away";
-				routesList[i] = "Route " + route_nums[i].toString();
-				console.log("Route " + route_nums[i] + " arrives in " + minutes.toString);
+				routesList[i] = "Route " + route_list[i].toString();
+				console.log("Route " + route_list[i] + " arrives in " + minutes.toString);
 			} else {
-				console.log("Error with Result for route: " + route_nums[i]);
+				console.log("Error with Result for route: " + route_list[i]);
 			}
 		} else {
-			console.log("Request for route " + route_nums[i] + " returned error code " + req.status.toString());
+			console.log("Request for route " + route_list[i] + " returned error code " + req.status.toString());
 		}
+
 	}
 
-	Pebble.sendAppMessage({
-					"minutes": minutesList,
-					"stop_num": "Stop #" + stop_num.toString(),
-					"route_nums": routesList
-				});
+	console.log("setting lists");
+	console.log(routesList.toString());
+	console.log(minutesList.toString());
+	//store the lists of routes and results in local storage as well
+	minutes_list = minutesList;
+	route_str_list = routesList;
+	localStorage.setItem("minutes_list", minutesList);
+	localStorage.setItem("route_str_list", routesList);
 
+	//display the last displayed route initially
+	getStopTimeByIndex(last_route_index);
+}
 
-	var req = new XMLHttpRequest();
-
-	var response;
-	var req = new XMLHttpRequest();
-	req.open('GET', "http://api.translink.ca/RTTIAPI/V1/stops/" + stop_num + "/estimates?timeframe=120&apiKey=xrt9jWz1VzXJ7unF1tlv&routeNo=" + route_num + "&count=1", false);
-	req.setRequestHeader("Accept", "application/JSON");
-	req.onload = function(e) {
-		if (req.status == 200) {
-			console.log(req.responseText);
-			response = JSON.parse(req.responseText);
-
-			var minutes;
-			//TODO: handle multiple stops?
-			response = response[0];
-			if (response.Schedules && response.Schedules[0].ExpectedCountdown) {
-				minutes = response.Schedules[0].ExpectedCountdown;
-				console.log(minutes.toString());
-				Pebble.sendAppMessage({
-					"minutes": minutes.toString() + " minutes away",
-					"stop_num": "Stop #" + stop_num.toString(),
-					"route_nums": "Route " + route_num.toString()
-				});
-			} else {
-
-				console.log("error");
-				Pebble.sendAppMessage({"minutes":"Error"});
-			}
-		} else {
-			console.log("Request returned error code " + req.status.toString());
+function getStopTime(route_number) {
+	// var routesList = localStorage.getItem("route_list");
+	// var routeStrList = localStorage.getItem("route_str_list");
+	// var minutesList=  localStorage.getItem("minutes_list");
+	console.log(routesList.toString());
+	for (var i=0; i<routesList.length; i++) {
+		if (routesList[i] == route_number) {
+			Pebble.sendAppMessage({"minutes": minutesList[i],
+									"stop_num": "Stop #" + stop_num.toString(),
+									"route_num": routesStrList[i]})
 		}
 	}
-	req.send(null);
+}
+
+function getStopTimeByIndex(index) {
+	// var routesList = localStorage.getItem("route_list");
+	// var routeStrList = localStorage.getItem("route_str_list");
+	// var minutesList=  localStorage.getItem("minutes_list");
+	Pebble.sendAppMessage({"minutes": minutes_list[index],
+									"stop_num": "Stop #" + stop_num.toString(),
+									"route_num": routes_str_list[index]});
 }
 
 Pebble.addEventListener("ready",
     function(e) {
         console.log("Connected.");
-        if (stop_num != null && route_num != null) {
-        	fetchStopTime(stop_num, route_num);
+        console.log(stop_num);
+        console.log(route_list);
+
+        if (stop_num != null && route_list != null) {
+        	var splitList = route_list.split(",");
+        	fetchStopTimes(stop_num, splitList);
+        	console.log("stop times fetched");
     	};
     }
 );
@@ -88,8 +96,7 @@ Pebble.addEventListener("ready",
 Pebble.addEventListener("appmessage",
 						function(e) {
 							console.log("appmessage");
-
-							fetchStopTime(stop_num, route_num);
+							getStopTimeByIndex(last_route_index+1);
 							
 						});
 
@@ -112,16 +119,11 @@ Pebble.addEventListener("webviewclosed",
 
 								//set the params and log them
 								console.log("Stop Number: " + config.stop_num);
-								console.log("Route Numbers: " + config.route_nums);
+								console.log("Route Numbers: " + config.route_num);
 
-								localStorage.setItem("stop_num", config.stop_num);
-								var routeList = config.route_nums.split(",");
-								localStorage.setItem("route_nums", routeList);
-								if (routeList.length >= 0) {
-									localStorage.setItem("route_num", config.route_num);
-								}
+								var routeList = config.route_num.split(",");
 
-								fetchStopTime(config.stop_num, config.route_num);
+								fetchStopTimes(config.stop_num, routeList);
 							} else {
 								console.log("no response");
 							}
