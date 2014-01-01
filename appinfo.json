@@ -14,7 +14,24 @@
     "minutes":2
   },
   "resources": {
-    "media": []
+    "media": [
+        {
+          "menuIcon": true,
+          "type":"png",
+          "name": "MENU_ICON_MYBUS",
+          "file": "images/menu_icon_mybus.png"
+        },
+        {
+          "type": "png",
+          "name": "ICON_NEXT",
+          "file": "images/actionbar_next.png"
+        },
+        {
+          "type": "png",
+          "name": "ICON_REFRESH",
+          "file": "images/actionbar_refresh.png"
+        }
+    ]
   },
   "capabilities": ["location","configurable"]
 }
