@@ -11,7 +11,8 @@
   "appKeys": {
     "stop_num": 0,
     "route_num":1,
-    "minutes":2
+    "minutes":2,
+    "action":3
   },
   "resources": {
     "media": [

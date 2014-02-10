@@ -20,6 +20,7 @@ enum {
   STOP_NUM = 0x0,
   ROUTE_NUM = 0x1,
   MINUTES = 0x2,
+  ACTION = 0x3
 };
 
 static void in_received_handler(DictionaryIterator *iter, void *context) {
@@ -68,17 +69,17 @@ static void out_sent_handler(DictionaryIterator *sent, void *context) {
   //text_layer_set_text(minutes_layer, "Loading...");
 }
 
-static void fetch_stop_time(void) {
+static void send_appmessage(char* message) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Fetching stop time");
   DictionaryIterator *iter;
   app_message_outbox_begin(&iter);
-  Tuplet value = TupletInteger(1, 42);
+  Tuplet value = TupletCString(ACTION, message);
   dict_write_tuplet(iter, &value);
   app_message_outbox_send();
 }
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  fetch_stop_time();
+  send_appmessage("nextRoute");
 }
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -86,7 +87,7 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  //TODO: trigger refresh
+  send_appmessage("refresh");
 }
 
 static void click_config_provider(void *context) {
@@ -143,7 +144,7 @@ static void app_message_init(void) {
   app_message_register_outbox_sent(out_sent_handler);
   //Init buffers
   app_message_open(64, 64);
-  fetch_stop_time();
+  send_appmessage("nextRoute");
 }
 
 static void init(void) {
