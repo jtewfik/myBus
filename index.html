@@ -51,8 +51,8 @@
     <script type="text/javascript">
       $().ready(function () {
 
-        $("#stopNum").val(localStorage.getItem("stop_num"));
-        $("#routeNum").val(localStorage.getItem("route_num"));
+        $("#stopNum").val(localStorage.getItem("stop_num_list"));
+        $("#routeNum").val(localStorage.getItem("route_list"));
 
         $("#config-form").submit(function(e) {
           console.log("TESTING SUBMIT");
@@ -63,8 +63,8 @@
                             "route_num": route
                           };
 
-          localStorage.setItem("stop_num", stop);
-          localStorage.setItem("route_num", route);
+          localStorage.setItem("stop_num_list", stop);
+          localStorage.setItem("route_list", route);
 
           document.location = "pebblejs://close#" + JSON.stringify(configObj);
           e.preventDefault();
