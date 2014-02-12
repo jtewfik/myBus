@@ -50,14 +50,16 @@
 
     <script type="text/javascript">
       $().ready(function () {
+        console.log("stop num list: " + localStorage.getItem("stop_num_list"));
+        console.log("route list: " + localStorage.getItem("route_list"));
 
         $("#stopNum").val(localStorage.getItem("stop_num_list"));
         $("#routeNum").val(localStorage.getItem("route_list"));
 
         $("#config-form").submit(function(e) {
-          console.log("TESTING SUBMIT");
           var stop = $("#stopNum").val();
           var route = $("#routeNum").val();
+          console.log("TESTING SUBMIT: stop = " + stop + " route = " + route);
 
           var configObj = { "stop_num": stop,
                             "route_num": route
