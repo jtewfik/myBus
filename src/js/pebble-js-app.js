@@ -106,7 +106,9 @@ function setSelectedStopAndFetch(stop_num_index, available_routes) {
 	console.log("available_routes: " + available_routes + " " + typeof available_routes);
 	console.log("route_list" + route_list);
 
-	var availableRoutesList = available_routes.split(", ");
+
+	available_route = available_routes.replace(" ", "");
+	var availableRoutesList = available_routes.split(",");
 	var routeListArray = route_list.split(",");
 	//TODO: set valid_route_list based on available routes param
 	valid_route_list = [];
@@ -223,8 +225,8 @@ function getStopTimeByIndex(index) {
 	var stopNumArray = stop_num_list.split(",");
 	var stop_number = stopNumArray[selected_stop_index];
 
-	var minutesString = (minutes_list_current[index] === -1 ? "Now" : minutes_list_current[index]) +
-							", " + (minutes_list_next[index] === -1 ? "now" : minutes_list_next[index]) + " min";
+	var minutesString = (minutes_list_current[index] === "-1" ? "Now" : minutes_list_current[index]) +
+							", " + (minutes_list_next[index] === "-1" ? "now" : minutes_list_next[index]) + " min";
 
 	Pebble.sendAppMessage({"minutes": minutesString,
 									"stop_num": "Stop #" + stop_number,
@@ -312,6 +314,7 @@ Pebble.addEventListener("webviewclosed",
 								//store the lists and trigger a reload
 								localStorage.setItem("route_list", config.route_num);
 								localStorage.setItem("stop_num_list", config.stop_num);
+								stop_num_list = config.stop_num;
 								reload();
 							} else {
 								console.log("no response");
