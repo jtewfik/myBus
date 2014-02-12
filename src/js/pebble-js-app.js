@@ -215,7 +215,7 @@ function getStopTime(route_number) {
 function getStopTimeByIndex(index) {
 	
 	console.log("Get stop time by index: " + index);
-	if (index == null || index == -1 || index >= route_str_list.length){
+	if (index == null || route_str_list == null || index == -1 || index >= route_str_list.length){
 		index = 0;
 	}
 	console.log("minutes: " + minutes_list_current[index]);
